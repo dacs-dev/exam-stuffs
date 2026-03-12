@@ -6,7 +6,7 @@
 /*   By: luferna3 <luferna3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 01:56:25 by luferna3          #+#    #+#             */
-/*   Updated: 2026/03/09 07:27:58 by luferna3         ###   ########.fr       */
+/*   Updated: 2026/03/12 02:11:56 by luferna3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@
 	
 // }
 
+
 vect2::vect2() : _x(0), _y(0)
 {
 	
@@ -197,7 +198,6 @@ vect2& vect2::operator*=(int toMult)
 	_y *= toMult;
 	return (*this);
 }
-
 vect2 vect2::operator*(int toMult) const
 {
 	vect2	tmp(*this);
@@ -212,7 +212,6 @@ vect2& vect2::operator+=(const vect2& toAdd)
 	_y += toAdd._y;
 	return (*this);
 }
-
 vect2 vect2::operator+(const vect2& toAdd) const
 {
 	vect2	tmp(*this);
@@ -266,7 +265,6 @@ vect2	operator*(int num, const vect2& toMult)
 	tmp *= num;
 	return (tmp);
 }
-
 std::ostream& operator<<(std::ostream& os, const vect2& toPrint)
 {
 	os << "{" << toPrint[0] << ", " << toPrint[1] << "}";

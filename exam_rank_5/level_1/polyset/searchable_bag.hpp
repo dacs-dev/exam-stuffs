@@ -1,14 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   searchable_bag.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: luferna3 <luferna3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/18 14:35:43 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/11/18 14:36:07 by ksudyn           ###   ########.fr       */
+/*   Created: 2026/03/11 00:15:29 by luferna3          #+#    #+#             */
+/*   Updated: 2026/03/11 00:22:21 by luferna3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "bsq.h"
+#pragma once
 
+#include "bag.hpp"
+
+class searchable_bag : virtual public bag
+{
+ public:
+	virtual bool has(int) const = 0;
+};
