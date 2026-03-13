@@ -6,124 +6,11 @@
 /*   By: luferna3 <luferna3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 03:07:08 by luferna3          #+#    #+#             */
-/*   Updated: 2026/03/12 03:10:03 by luferna3         ###   ########.fr       */
+/*   Updated: 2026/03/13 03:49:57 by luferna3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bigint.hpp"
-
-// bigint::bigint() : _str("0")
-// {
-	
-// }
-
-// bigint::bigint(unsigned int n)
-// {
-
-// }
-
-// bigint::bigint(const bigint& other) :_str(other.getStr())
-// {
-	
-// }
-
-// bigint& bigint::operator=(const bigint& other)
-// {
-	
-// }
-
-// bigint::~bigint()
-// {
-	
-// }
-
-
-// std::string bigint::getStr() const
-// {
-	
-// }
-
-// void bigint::validate()
-// {
-	
-// }
-
-// bigint& bigint::operator++()
-// {
-	
-// }
-
-// bigint bigint::operator++(int)
-// {
-	
-// }
-
-// static unsigned long long str_to_number(const std::string& str)
-// {
-	
-// }
-
-// bigint& bigint::operator>>=(const bigint& obj)
-// {
-	
-// }
-
-// bigint& bigint::operator<<=(unsigned int shift)
-// {
-	
-// }
-
-// bigint bigint::operator<<(unsigned int shift) const
-// {
-	
-// }
-
-// bigint bigint::operator+(const bigint& other) const
-// {
-	
-// }
-
-// bigint& bigint::operator+=(const bigint& other)
-// {
-
-// }
-
-// bool bigint::operator==(const bigint& other) const
-// {
-	
-// }
-
-// bool bigint::operator!=(const bigint& other) const
-// {
-	
-// }
-
-// bool bigint::operator<(const bigint& other) const
-// {
-	
-// }
-
-// bool bigint::operator>(const bigint& other) const
-// {
-	
-// }
-
-
-// bool bigint::operator<=(const bigint& other) const
-// {
-	
-// }
-
-// bool bigint::operator>=(const bigint& other) const
-// {
-	
-// }
-
-// std::ostream& operator<<(std::ostream& os, const bigint& toPrint)
-// {
-	
-// }
-
 
 bigint::bigint() : _str("0")
 {
@@ -143,7 +30,7 @@ bigint::bigint(unsigned int n)
 	validate();
 }
 
-bigint::bigint(const bigint& other) :_str(other.getStr())
+bigint::bigint(const bigint& other) :_str(other.get_str())
 {
 	
 }
@@ -151,7 +38,7 @@ bigint::bigint(const bigint& other) :_str(other.getStr())
 bigint& bigint::operator=(const bigint& other)
 {
 	if (this != &other)
-		_str = other.getStr();
+		_str = other.get_str();
 	return (*this);
 }
 
@@ -161,7 +48,7 @@ bigint::~bigint()
 }
 
 
-std::string bigint::getStr() const
+std::string bigint::get_str() const
 {
 	return (_str);
 }
@@ -202,7 +89,7 @@ static unsigned long long str_to_number(const std::string& str)
 
 bigint& bigint::operator>>=(const bigint& obj)
 {
-	unsigned long long	shift = str_to_number(obj._str);
+	unsigned long long shift = str_to_number(obj._str);
 	
 	if (shift >= _str.size())
 		_str = "0";
@@ -238,19 +125,19 @@ bigint& bigint::operator+=(const bigint& other)
 	int i = _str.size() - 1;
 	int j = other._str.size() - 1;
 	int carry = 0;
-	std::string result;
-
+	std::string	result;
+	
 	while (i >= 0 || j >= 0 || carry)
 	{
 		int d1 = (i >= 0) ? _str[i] - '0' : 0;
-		int d2 = (j >= 0) ? other._str[j] - '0' : 0;
+		int d2 = (j >= 0) ? other._str[j] -'0' : 0;
 		int sum = d1 + d2 + carry;
 		result += (sum % 10) + '0';
 		carry = sum / 10;
 		i--;
 		j--;
 	}
-	std::reverse(result.begin(), result. end());
+	std::reverse(result.begin(), result.end());
 	_str = result;
 	return (*this);
 }
@@ -280,16 +167,16 @@ bool bigint::operator>(const bigint& other) const
 
 bool bigint::operator<=(const bigint& other) const
 {
-	return (!(other > *this));
+	return (!(*this > other));
 }
 
 bool bigint::operator>=(const bigint& other) const
 {
-	return (!(other < *this));
+	return (!(*this < other));
 }
 
 std::ostream& operator<<(std::ostream& os, const bigint& toPrint)
 {
-	os << toPrint.getStr();
+	os << toPrint.get_str();
 	return (os);
 }
