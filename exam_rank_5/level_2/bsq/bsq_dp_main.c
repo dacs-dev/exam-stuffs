@@ -1,56 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   bsq_dp_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luferna3 <luferna3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/16 03:39:28 by luferna3          #+#    #+#             */
-/*   Updated: 2026/03/17 06:22:46 by luferna3         ###   ########.fr       */
+/*   Created: 2026/03/16 03:36:27 by luferna3          #+#    #+#             */
+/*   Updated: 2026/03/16 03:36:35 by luferna3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "bsq_dp.h"
 
-#include "bsq.h"
-
-static void	process(FILE *file, int is_last)
+static void	process(FILE *f, int last)
 {
-	t_map	map;
+	t_map	m;
 
-	if (!parse_map(&map, file))
+	if (parse_map(&m, f))
 	{
-		if (!is_last)
-			fprintf(stdout, "\n");
-		return ;
+		solve(&m);
+		print_map(&m);
+		free_map(&m);
 	}
-	solve(&map);
-	print_map(&map);
-	free_map(&map);
-	if (!is_last)
+	if (!last)
 		fprintf(stdout, "\n");
 }
 
 int	main(int argc, char **argv)
 {
-	FILE	*file;
-	int		i;
+	FILE	*f;
 
 	if (argc == 1)
-		return (process(stdin, 1), 0);
-	i = 1;
-	while (i < argc)
 	{
-		file = fopen(argv[i], "r");
-		if (!file)
-			fprintf(stderr, "map error\n");
-		else
+		process(stdin, 1);
+		return (0);
+	}
+	for (int i = 1; i < argc; i++)
+	{
+		if (!(f = fopen(argv[i], "r")))
 		{
-			process(file, i == argc - 1);
-			fclose(file);
+			fprintf(stderr, "map error\n");
+			if (i < argc - 1)
+				fprintf(stdout, "\n");
+			continue ;
 		}
-		if (i < argc - 1 && !file)
-			fprintf(stdout, "\n");
-		i++;
+		process(f, i == argc - 1);
+		fclose(f);
 	}
 	return (0);
 }
