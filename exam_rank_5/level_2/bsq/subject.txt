@@ -1,3 +1,6 @@
+FIRST LINE OF MAP DIFFERENT IN EXAM NOW. NO SPACE SEPARATION
+
+
 Assignment name              : bsq
 Expected files               : *.c *.h
 Allowed functions and globals: malloc, calloc, realloc, free, fopen, fclose,
