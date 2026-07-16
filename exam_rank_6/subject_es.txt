@@ -1,0 +1,49 @@
+Nombre de la asignación : mini_serv
+Archivos esperados      : mini_serv.c
+Funciones permitidas    : write, close, select, socket, accept, listen, send, 
+                         recv, bind, strstr, malloc, realloc, free, calloc, 
+                         bzero, atoi, sprintf, strlen, exit, strcpy, strcat, 
+                         memset
+================================================================================
+
+Escribe un programa que escuche las conexiones de clientes en un puerto específico en la dirección 127.0.0.1 y permita que los clientes hablen entre sí.
+
+Este programa recibirá como primer argumento el puerto al que debe vincularse (bind).
+
+- Si no se pasa ningún argumento (o número incorrecto), debe escribir en stderr "Wrong number of arguments" seguido de un \n y salir con un estatus de error 1.
+- Si una llamada al sistema (System Call) devuelve un error antes de que el programa comience a aceptar conexiones, debe escribir en stderr "Fatal error" seguido de un \n y salir con un estatus de error 1.
+- Si no se puede asignar memoria (error de malloc/calloc), debe escribir en stderr "Fatal error" seguido de un \n y salir con un estatus de error 1.
+
+Tu programa debe ser no-bloqueante, pero los clientes pueden ser lentos ("lazy"). Si un cliente no lee tus mensajes, NO debes desconectarlo...
+
+- Tu programa NO debe contener directivas de preprocesador #define.
+- Tu programa SOLO debe escuchar en la dirección IP 127.0.0.1.
+- Los file descriptors (fd) que recibirás ya estarán configurados para que 'recv' o 'send' se bloqueen si 'select' no ha sido llamado antes de invocarlos, pero no se bloquearán en caso contrario.
+
+Cuando un cliente se conecta al servidor:
+-----------------------------------------
+- Al cliente se le asignará un ID. El primer cliente recibirá el ID 0, y cada nuevo cliente recibirá el ID del último cliente + 1.
+- El comodín %d será reemplazado por este número de ID.
+- Se enviará un mensaje a todos los clientes que ya estaban conectados al servidor: "server: client %d just arrived\n"
+
+Los clientes deben poder enviar mensajes a tu programa:
+-------------------------------------------------------
+- Los mensajes solo contendrán caracteres imprimibles, no es necesario validarlo.
+- Un solo mensaje puede contener múltiples saltos de línea (\n).
+- Cuando el servidor recibe un mensaje, debe reenviarlo a todos los demás clientes anteponiendo "client %d: " ¡antes de cada línea!
+
+Cuando un cliente se desconecta del servidor:
+---------------------------------------------
+- Se enviará un mensaje a todos los clientes que seguían conectados al servidor: "server: client %d just left\n"
+
+Las fugas de memoria (leaks) o de file descriptors (fd) están estrictamente prohibidas.
+
+Para ayudarte, encontrarás un archivo main.c con el inicio de un servidor y quizás algunas funciones útiles. (Ten cuidado: ese archivo utiliza funciones prohibidas o escribe cosas que no deberían estar en tu programa final).
+
+Advertencia: Nuestro corrector automático (tester) espera que envíes los mensajes lo más rápido posible. No utilices buffers innecesarios.
+
+La evaluación puede tardar un poco más de lo habitual...
+
+Pista: Puedes usar 'nc' (netcat) para probar tu programa.
+Pista: Deberías usar 'nc' para probar tu programa.
+Pista: Para probar en tu entorno local puedes usar fcntl(fd, F_SETFL, O_NONBLOCK), pero usa select y NUNCA compruebes EAGAIN (man 2 send).
